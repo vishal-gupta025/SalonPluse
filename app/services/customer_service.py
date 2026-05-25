@@ -1,0 +1,54 @@
+from app.models.customer import Customer
+
+from app.repositories.customer_repo import (
+    CustomerRepository
+)
+
+
+class CustomerService:
+
+    @staticmethod
+    def create_customer(
+        db,
+        payload,
+        owner_id
+    ):
+
+        existing = (
+            CustomerRepository
+            .get_by_phone(
+                db,
+                owner_id,
+                payload.phone
+            )
+        )
+
+        if existing:
+            raise ValueError(
+                "Customer already exists"
+            )
+
+        customer = Customer(
+            owner_id=owner_id,
+            name=payload.name,
+            phone=payload.phone,
+            gender=payload.gender
+        )
+
+        return CustomerRepository.create(
+            db,
+            customer
+        )
+
+    @staticmethod
+    def get_customers(
+        db,
+        owner_id
+    ):
+        return (
+            CustomerRepository
+            .get_all_by_owner(
+                db,
+                owner_id
+            )
+        )
