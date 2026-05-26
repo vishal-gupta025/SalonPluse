@@ -17,6 +17,8 @@ from app.services.customer_service import (
     CustomerService
 )
 
+from fastapi import Query
+
 router = APIRouter(
     prefix="/customers",
     tags=["Customers"]
@@ -59,4 +61,38 @@ def get_customers(
     return CustomerService.get_customers(
         db,
         current_user.id
+    )
+
+@router.get(
+    "/search",
+    response_model=list[CustomerResponse]
+)
+def search_customers(
+    query: str,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+
+    return CustomerService.search(
+        db,
+        current_user.id,
+        query
+    )
+
+@router.get(
+    "/{customer_id}/visits"
+)
+def customer_visit_history(
+    customer_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+
+    return (
+        CustomerService
+        .customer_history(
+            db,
+            current_user.id,
+            customer_id
+        )
     )

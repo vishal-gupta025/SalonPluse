@@ -4,6 +4,9 @@ from app.repositories.customer_repo import (
     CustomerRepository
 )
 
+from app.repositories.visit_repo import (
+    VisitRepository
+)
 
 class CustomerService:
 
@@ -50,5 +53,32 @@ class CustomerService:
             .get_all_by_owner(
                 db,
                 owner_id
+            )
+        )
+    
+    @staticmethod
+    def search(
+        db,
+        owner_id,
+        query
+    ):
+        return CustomerRepository.search(
+            db,
+            owner_id,
+            query
+        )
+    
+    @staticmethod
+    def customer_history(
+        db,
+        owner_id,
+        customer_id
+    ):
+        return (
+            VisitRepository
+            .get_by_customer(
+                db,
+                owner_id,
+                customer_id
             )
         )

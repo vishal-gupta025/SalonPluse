@@ -45,3 +45,37 @@ class CustomerRepository:
             )
             .first()
         )
+    
+    @staticmethod
+    def get_by_id(
+        db: Session,
+        owner_id: int,
+        customer_id: int
+    ):
+        return (
+            db.query(Customer)
+            .filter(
+                Customer.id == customer_id,
+                Customer.owner_id == owner_id
+            )
+            .first()
+        )
+    
+    @staticmethod
+    def search(
+        db,
+        owner_id,
+        query
+    ):
+        return (
+            db.query(Customer)
+            .filter(
+                Customer.owner_id == owner_id
+            )
+            .filter(
+                (Customer.name.ilike(f"%{query}%"))
+                |
+                (Customer.phone.ilike(f"%{query}%"))
+            )
+            .all()
+        )
