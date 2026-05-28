@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Inter", sans-serif;
+    background:
+      radial-gradient(circle at top, rgba(15, 23, 42, 0.04), transparent 28%),
+      linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+    color: #0f172a;
+    min-height: 100vh;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .dashboard-shell {
+    @apply min-h-screen bg-slate-50 text-slate-900;
+  }
+
+  .dashboard-surface {
+    @apply rounded-3xl border border-slate-200 bg-white shadow-sm shadow-slate-200/60;
+  }
+
+  .dashboard-card {
+    @apply dashboard-surface p-6 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  .dashboard-input {
+    @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-slate-900 focus:outline-none focus:ring-4 focus:ring-slate-200;
+  }
+
+  .dashboard-select {
+    @apply dashboard-input pr-10;
+  }
+
+  .dashboard-button {
+    @apply inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .dashboard-button-primary {
+    @apply dashboard-button bg-slate-950 text-white shadow-sm shadow-slate-900/10 hover:bg-slate-800;
+  }
+
+  .dashboard-button-secondary {
+    @apply dashboard-button border border-slate-300 bg-white text-slate-700 hover:bg-slate-100;
+  }
+
+  .dashboard-table-shell {
+    @apply overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm shadow-slate-200/60;
+  }
+
+  .dashboard-table {
+    @apply min-w-full border-separate border-spacing-0;
+  }
+
+  .dashboard-th {
+    @apply whitespace-nowrap border-b border-slate-200 bg-slate-50 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500;
+  }
+
+  .dashboard-td {
+    @apply border-b border-slate-100 px-4 py-4 text-sm text-slate-700;
+  }
+
+  .dashboard-page-title {
+    @apply text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl;
+  }
+
+  .dashboard-chip {
+    @apply inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700;
+  }
+}

@@ -1,0 +1,22 @@
+import api from "./axios";
+
+export const getServices = async () => {
+
+  const response = await api.get(
+    "/services"
+  );
+
+  return response.data;
+};
+
+export const createService = async (
+  payload
+) => {
+
+  const response = await api.post(
+    "/services",
+    payload
+  );
+
+  return response.data;
+};
