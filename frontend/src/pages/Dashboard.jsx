@@ -96,7 +96,7 @@ function Dashboard() {
                 Dashboard
               </h1>
               <p className="mt-2 max-w-2xl text-sm text-slate-500 sm:text-base">
-                Track revenue, payments, and service performance from one responsive workspace.
+                See the numbers that matter most and keep daily operations moving from one responsive workspace.
               </p>
             </div>
 

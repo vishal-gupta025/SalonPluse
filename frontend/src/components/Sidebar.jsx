@@ -37,7 +37,7 @@ function Sidebar({
 
           <div>
             <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-              SalonPulse
+              Bizora
             </p>
             <h1 className="mt-1 text-2xl font-semibold tracking-tight">
               Dashboard

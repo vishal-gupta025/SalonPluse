@@ -79,7 +79,7 @@ function Expenses() {
       <div className="mb-8">
         <h1 className="dashboard-page-title">Expenses</h1>
         <p className="mt-2 max-w-2xl text-sm text-slate-500 sm:text-base">
-          Track salon costs with a tidy, responsive expense management view.
+          Track costs with a tidy, responsive view that makes spending easier to control.
         </p>
       </div>
 

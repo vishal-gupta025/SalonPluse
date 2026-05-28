@@ -21,6 +21,17 @@ export const createCustomer = async (
   return response.data;
 };
 
+export const getCustomerVisits =
+  async (customerId) => {
+
+    const response =
+      await api.get(
+        `/customers/${customerId}/visits`
+      );
+
+    return response.data;
+};
+
 export const searchCustomers = async (
   query
 ) => {

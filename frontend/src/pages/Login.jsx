@@ -65,15 +65,15 @@ function Login() {
           <div className="hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 p-10 text-white lg:flex lg:flex-col lg:justify-between">
 
             <div>
-              <p className="text-xs uppercase tracking-[0.35em] text-slate-400">SalonPulse</p>
-              <h1 className="mt-6 text-4xl font-semibold tracking-tight">Salon operations made clean.</h1>
+              <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Bizora</p>
+              <h1 className="mt-6 text-4xl font-semibold tracking-tight">Run operations with clarity.</h1>
               <p className="mt-4 max-w-md text-sm leading-6 text-slate-300">
-                Manage customers, services, visits, expenses, and analytics from one responsive dashboard.
+                Keep customers, services, visits, expenses, and analytics flowing from one responsive command center.
               </p>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-              <p className="text-sm text-slate-300">Fast login. Clear overview. Mobile ready.</p>
+              <p className="text-sm text-slate-300">Fast login. Clear insights. Smooth on every device.</p>
             </div>
 
           </div>
@@ -83,9 +83,9 @@ function Login() {
             <div className="mb-8">
               <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Welcome back</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
-                SalonPulse Login
+                Bizora Login
               </h2>
-              <p className="mt-2 text-sm text-slate-500">Sign in to continue to your dashboard.</p>
+              <p className="mt-2 text-sm text-slate-500">Sign in to pick up right where your business left off.</p>
             </div>
 
         <input

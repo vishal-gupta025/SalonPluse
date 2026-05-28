@@ -9,12 +9,13 @@ import Customers from "./pages/Customers";
 
 import Services from "./pages/Services";
 
-import Visits from "./pages/visits";
+import Visits from "./pages/Visits";
 
 import Expenses from "./pages/Expenses";
 
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
+import CustomerProfile from "./pages/CustomerProfile";
 
 function App() {
   return (
@@ -44,6 +45,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Customers />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/customers/:id"
+          element={
+            <ProtectedRoute>
+              <CustomerProfile />
             </ProtectedRoute>
           }
         />

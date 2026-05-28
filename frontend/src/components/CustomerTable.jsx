@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function CustomerTable({
   customers
 }) {
@@ -47,7 +49,14 @@ function CustomerTable({
             >
 
               <td className="dashboard-td font-medium text-slate-900">
-                {customer.name}
+                  <Link
+                    to={`/customers/${customer.id}`}
+                    className="text-blue-600 hover:underline"
+                  >
+
+                    {customer.name}
+
+                  </Link>
               </td>
 
               <td className="dashboard-td whitespace-nowrap">

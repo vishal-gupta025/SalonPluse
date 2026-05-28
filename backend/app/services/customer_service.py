@@ -1,3 +1,5 @@
+from fastapi import HTTPException
+
 from app.models.customer import Customer
 
 from app.repositories.customer_repo import (
@@ -74,6 +76,21 @@ class CustomerService:
         owner_id,
         customer_id
     ):
+        
+        customer = (
+            CustomerRepository
+            .get_by_id(
+                db,
+                owner_id,
+                customer_id
+            )
+        )
+
+        if not customer:
+            raise HTTPException(
+                status_code=404,
+                detail="Customer not found"
+            )
         return (
             VisitRepository
             .get_by_customer(

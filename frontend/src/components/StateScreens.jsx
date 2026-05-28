@@ -90,7 +90,7 @@ export function FullPageError({ title = "Something went wrong", message, onRetry
     <div className="min-h-screen bg-slate-950 px-4 py-10 sm:px-6 lg:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-3xl items-center justify-center">
         <div className="dashboard-card w-full border border-rose-200 bg-white p-8 text-center shadow-2xl shadow-slate-950/20 sm:p-10">
-          <p className="text-xs uppercase tracking-[0.35em] text-slate-400">SalonPulse</p>
+          <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Bizora</p>
           <h1 className="mt-4 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">{title}</h1>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-slate-500 sm:text-base">{message}</p>
 

@@ -117,11 +117,43 @@ class VisitRepository:
         owner_id,
         customer_id
     ):
-        return (
+
+        visits = (
             db.query(Visit)
             .filter(
                 Visit.owner_id == owner_id,
                 Visit.customer_id == customer_id
             )
+            .order_by(
+                Visit.visit_date.desc()
+            )
             .all()
         )
+
+        result = []
+
+        for visit in visits:
+
+            services = [
+                vs.service.name
+                for vs in visit.visit_services
+            ]
+
+            result.append({
+
+                "id": visit.id,
+
+                "visit_date":
+                visit.visit_date,
+
+                "payment_method":
+                visit.payment_method,
+
+                "total_amount":
+                visit.total_amount,
+
+                "services":
+                services
+            })
+
+        return result

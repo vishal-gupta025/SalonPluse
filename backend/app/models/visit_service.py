@@ -35,3 +35,7 @@ class VisitService(Base):
         "Visit",
         back_populates="visit_services"
     )
+
+    service = relationship(
+    "Service"
+)

@@ -78,7 +78,7 @@ function Services() {
       <div className="mb-8">
         <h1 className="dashboard-page-title">Services</h1>
         <p className="mt-2 max-w-2xl text-sm text-slate-500 sm:text-base">
-          Organize salon offerings in a clear, mobile-friendly service catalog.
+          Organize offerings in a clear, mobile-friendly catalog that keeps your team moving.
         </p>
       </div>
 

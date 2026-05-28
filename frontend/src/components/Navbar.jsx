@@ -73,7 +73,7 @@ function Navbar({ onMenuClick }) {
 
           <div className="min-w-0">
             <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-              SalonPulse
+              Bizora
             </p>
             <h1 className="truncate text-lg font-semibold text-slate-900 sm:text-xl">
               Dashboard

@@ -156,7 +156,7 @@ class AnalyticsRepository:
                     VisitService.id
                 ).desc()
             )
-            .limit(5)
+            .limit(3)
             .all()
         )
     

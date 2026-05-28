@@ -53,10 +53,11 @@ class CustomerRepository:
     
     @staticmethod
     def get_by_id(
-        db: Session,
-        owner_id: int,
-        customer_id: int
+        db,
+        owner_id,
+        customer_id
     ):
+
         return (
             db.query(Customer)
             .filter(

@@ -29,12 +29,30 @@ function Register() {
 
     e.preventDefault();
 
-    if (
-        !phone.match(/^\d{10}$/)
-      ) {
+    if (!name.trim()) {
+      toast.error("Name is required");
+      return;
+    }
+
+    if (!email.trim()) {
+      toast.error("Email is required");
+      return;
+    }
+
+    if (!password.trim()) {
+      toast.error("Password is required");
+      return;
+    }
+
+    if (!phone.trim()) {
+      toast.error("Phone number is required");
+      return;
+    }
+
+    if (!phone.match(/^\d{10}$/)) {
 
         toast.error(
-          "Phone number must be 10 digits"
+          "Phone number must be 10 digits long"
         );
 
         return;
@@ -77,15 +95,15 @@ function Register() {
           <div className="hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 p-10 text-white lg:flex lg:flex-col lg:justify-between">
 
             <div>
-              <p className="text-xs uppercase tracking-[0.35em] text-slate-400">SalonPulse</p>
-              <h1 className="mt-6 text-4xl font-semibold tracking-tight">Build your salon workspace.</h1>
+              <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Bizora</p>
+              <h1 className="mt-6 text-4xl font-semibold tracking-tight">Build a smarter workspace.</h1>
               <p className="mt-4 max-w-md text-sm leading-6 text-slate-300">
-                Create your account, manage appointments, and keep your business organized from any device.
+                Create your account, simplify operations, and keep your business organized from any device.
               </p>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-              <p className="text-sm text-slate-300">Responsive, polished, and ready for production.</p>
+              <p className="text-sm text-slate-300">Responsive, polished, and built for daily use.</p>
             </div>
 
           </div>
@@ -100,7 +118,7 @@ function Register() {
               <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
                 Register
               </h1>
-              <p className="mt-2 text-sm text-slate-500">Set up your salon admin account in a minute.</p>
+              <p className="mt-2 text-sm text-slate-500">Set up your admin account in under a minute.</p>
             </div>
 
         <input
@@ -108,6 +126,7 @@ function Register() {
           placeholder="Name"
           className="dashboard-input mb-4"
           value={name}
+          required
           onChange={(e) =>
             setName(e.target.value)
           }
@@ -118,6 +137,7 @@ function Register() {
             placeholder="Phone Number"
           className="dashboard-input mb-4"
             value={phone}
+          required
             onChange={(e) =>
                 setPhone(e.target.value)
             }
@@ -128,6 +148,7 @@ function Register() {
           placeholder="Email"
           className="dashboard-input mb-4"
           value={email}
+          required
           onChange={(e) =>
             setEmail(e.target.value)
           }
@@ -138,6 +159,7 @@ function Register() {
           placeholder="Password"
           className="dashboard-input mb-4"
           value={password}
+          required
           onChange={(e) =>
             setPassword(e.target.value)
           }
