@@ -1,6 +1,8 @@
 from datetime import datetime
 from datetime import timedelta
 
+from app.core.timezone import indian_time
+
 from sqlalchemy import func
 
 from app.models.visit import Visit
@@ -18,7 +20,7 @@ class AnalyticsRepository:
         owner_id
     ):
 
-        today = datetime.utcnow().date()
+        today = indian_time().date()
 
         revenue = (
             db.query(
@@ -44,7 +46,7 @@ class AnalyticsRepository:
         owner_id
     ):
 
-        today = datetime.utcnow().date()
+        today = indian_time().date()
 
         count = (
             db.query(
@@ -70,7 +72,7 @@ class AnalyticsRepository:
         owner_id
     ):
 
-        now = datetime.utcnow()
+        now = indian_time()
 
         revenue = (
             db.query(
@@ -101,7 +103,7 @@ class AnalyticsRepository:
         owner_id
     ):
 
-        now = datetime.utcnow()
+        now = indian_time()
 
         expense = (
             db.query(

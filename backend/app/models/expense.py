@@ -1,4 +1,4 @@
-from datetime import datetime
+from app.core.timezone import indian_time
 
 from sqlalchemy import Column, Integer, Float, String, DateTime, ForeignKey
 
@@ -32,10 +32,10 @@ class Expense(Base):
 
     expense_date = Column(
         DateTime,
-        default=datetime.utcnow
+        default=indian_time
     )
 
     created_at = Column(
         DateTime,
-        default=datetime.utcnow
+        default=indian_time
     )

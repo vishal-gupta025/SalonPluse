@@ -14,7 +14,7 @@ function SummaryCard({
         {value}
       </p>
 
-      <div className="mt-5 h-1.5 w-16 rounded-full bg-gradient-to-r from-slate-900 to-slate-400" />
+      <div className="mt-5 h-1.5 w-16 rounded-full bg-gradient-to-r from-sky-600 to-cyan-400" />
 
     </div>
   );

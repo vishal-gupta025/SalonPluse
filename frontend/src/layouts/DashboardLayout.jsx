@@ -14,7 +14,7 @@ function DashboardLayout({ children }) {
         <button
           type="button"
           aria-label="Close sidebar"
-          className="fixed inset-0 z-30 bg-slate-950/40 lg:hidden"
+          className="fixed inset-0 z-30 bg-slate-900/15 backdrop-blur-[1px] lg:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}

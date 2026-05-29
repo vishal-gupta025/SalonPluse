@@ -20,20 +20,20 @@ function Sidebar({
 
       `flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition duration-200 ${
         isActive
-          ? "bg-white text-slate-950 shadow-sm"
-          : "text-slate-300 hover:bg-white/10 hover:text-white"
+          ? "border border-sky-100 bg-sky-50 text-sky-700 shadow-sm"
+          : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
       }`;
 
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-40 w-72 transform border-r border-slate-800 bg-slate-950 text-white transition-transform duration-300 lg:translate-x-0 ${
+      className={`fixed inset-y-0 left-0 z-40 w-72 transform border-r border-slate-200 bg-white text-slate-900 shadow-xl shadow-slate-200/50 transition-transform duration-300 lg:translate-x-0 ${
         mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       }`}
     >
 
       <div className="flex h-full flex-col">
 
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
+        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
 
           <div>
             <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
@@ -47,7 +47,7 @@ function Sidebar({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full border border-white/10 p-2 text-slate-300 transition hover:bg-white/10 hover:text-white lg:hidden"
+            className="rounded-full border border-slate-200 p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 lg:hidden"
             aria-label="Close navigation"
           >
             ×

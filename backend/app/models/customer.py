@@ -1,4 +1,4 @@
-from datetime import datetime
+from app.core.timezone import indian_time
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 
@@ -18,4 +18,4 @@ class Customer(Base):
 
     gender = Column(String,nullable=True)
 
-    created_at = Column(DateTime,default=datetime.utcnow)
+    created_at = Column(DateTime,default=indian_time)

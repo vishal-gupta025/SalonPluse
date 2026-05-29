@@ -56,29 +56,32 @@ function Login() {
     };
 
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-10 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.08),_transparent_28%),linear-gradient(180deg,_#f8fafc_0%,_#eef2ff_100%)] px-4 py-10 sm:px-6 lg:px-8">
 
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-6xl items-center justify-center">
 
-        <div className="grid w-full overflow-hidden rounded-[2rem] border border-white/10 bg-white shadow-2xl shadow-slate-950/20 lg:grid-cols-2">
+        <div className="grid w-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-2xl shadow-slate-200/50 lg:grid-cols-2">
 
-          <div className="hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 p-10 text-white lg:flex lg:flex-col lg:justify-between">
+          <div className="relative hidden overflow-hidden bg-gradient-to-br from-slate-950 via-sky-900 to-cyan-800 p-10 text-white lg:flex lg:flex-col lg:justify-between">
+
+            <div className="absolute -right-16 top-8 h-44 w-44 rounded-full bg-cyan-400/20 blur-3xl" />
+            <div className="absolute -bottom-20 left-0 h-56 w-56 rounded-full bg-sky-400/20 blur-3xl" />
 
             <div>
-              <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Bizora</p>
+              <p className="text-xs uppercase tracking-[0.35em] text-cyan-100/70">Bizora</p>
               <h1 className="mt-6 text-4xl font-semibold tracking-tight">Run operations with clarity.</h1>
-              <p className="mt-4 max-w-md text-sm leading-6 text-slate-300">
+              <p className="mt-4 max-w-md text-sm leading-6 text-slate-200">
                 Keep customers, services, visits, expenses, and analytics flowing from one responsive command center.
               </p>
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-              <p className="text-sm text-slate-300">Fast login. Clear insights. Smooth on every device.</p>
+            <div className="rounded-3xl border border-white/15 bg-white/10 p-5 backdrop-blur">
+              <p className="text-sm text-cyan-50">Fast login. Clear insights. Smooth on every device.</p>
             </div>
 
           </div>
 
-          <form className="p-6 sm:p-8 lg:p-10" onSubmit={handleLogin}>
+          <form className="bg-slate-50 p-6 sm:p-8 lg:p-10" onSubmit={handleLogin}>
 
             <div className="mb-8">
               <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Welcome back</p>
@@ -122,7 +125,7 @@ function Login() {
             Don't have an account?
 
             <span
-                className="ml-1 cursor-pointer font-semibold text-slate-950 underline decoration-slate-300 underline-offset-4"
+              className="ml-1 cursor-pointer font-semibold text-sky-800 underline decoration-sky-300 underline-offset-4"
                 onClick={() =>
                 navigate("/register")
                 }

@@ -1,4 +1,5 @@
-from datetime import datetime
+
+from app.core.timezone import indian_time
 
 from sqlalchemy import Column, Integer, String, DateTime, Float, ForeignKey
 
@@ -37,5 +38,5 @@ class Service(Base):
 
     created_at = Column(
         DateTime,
-        default=datetime.utcnow
+        default=indian_time
     )

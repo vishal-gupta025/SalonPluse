@@ -1,5 +1,4 @@
-from datetime import datetime
-
+from app.core.timezone import indian_time
 from sqlalchemy import Column, Integer, String, DateTime, Float, ForeignKey
 
 from sqlalchemy.orm import relationship
@@ -40,12 +39,12 @@ class Visit(Base):
 
     visit_date = Column(
         DateTime,
-        default=datetime.utcnow
+        default=indian_time
     )
 
     created_at = Column(
         DateTime,
-        default=datetime.utcnow
+        default=indian_time
     )
 
     customer = relationship(

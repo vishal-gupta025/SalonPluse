@@ -56,7 +56,7 @@ function Navbar({ onMenuClick }) {
   };
 
   return (
-    <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/85 backdrop-blur">
+    <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur">
 
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
 
@@ -88,7 +88,7 @@ function Navbar({ onMenuClick }) {
 
             <div className="hidden items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2 sm:flex">
 
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-950 text-sm font-semibold text-white">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-600 text-sm font-semibold text-white shadow-sm shadow-sky-600/20">
                 {initials}
               </div>
 
