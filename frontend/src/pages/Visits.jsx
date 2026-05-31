@@ -38,14 +38,21 @@ function Visits() {
 
   const [services, setServices] =
     useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+
+  const [loading, setLoading] =
+   useState(true);
+
+  const [error, setError] =
+   useState("");
+
+  const [selectedDate,setSelectedDate] =
+    useState("");
 
   useEffect(() => {
 
     fetchData();
 
-  }, []);
+  }, [selectedDate]);
 
   const fetchData = async () => {
 
@@ -55,7 +62,7 @@ function Visits() {
     try {
 
       const visitsData =
-        await getVisits();
+        await getVisits(selectedDate);
 
       const customersData =
         await getCustomers();
@@ -111,6 +118,25 @@ function Visits() {
         services={services}
         onAdd={handleCreateVisit}
       />
+
+      <div className="mb-4">
+
+        <label className="block mb-2 font-medium">
+          Filter by Date
+        </label>
+
+        <input
+          type="date"
+          value={selectedDate}
+          onChange={(e) =>
+            setSelectedDate(
+              e.target.value
+            )
+          }
+          className="border rounded px-3 py-2"
+        />
+
+      </div>
 
       {loading ? (
         <TableSkeleton rows={5} columns={5} />

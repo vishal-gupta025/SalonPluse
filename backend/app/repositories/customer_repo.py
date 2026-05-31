@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 
 from app.models.customer import Customer
+from app.models.visit import Visit
+from sqlalchemy import func
 
 from sqlalchemy import or_
 
@@ -87,3 +89,38 @@ class CustomerRepository:
             )
             .all()
         )
+
+    @staticmethod
+    def get_customers_by_date(
+        db,
+        owner_id: int,
+        visit_date
+    ):
+        # Join with Visit and return distinct customers who had visits on visit_date
+        rows = (
+            db.query(
+                Customer.id,
+                Customer.name,
+                Customer.phone,
+                Customer.gender
+            )
+            .join(Visit, Visit.customer_id == Customer.id)
+            .filter(
+                Customer.owner_id == owner_id,
+                func.date(Visit.visit_date) == visit_date
+            )
+            .distinct()
+            .all()
+        )
+
+        # Map rows to dicts matching CustomerResponse
+        result = []
+        for r in rows:
+            result.append({
+                "id": r.id,
+                "name": r.name,
+                "phone": r.phone,
+                "gender": r.gender,
+            })
+
+        return result

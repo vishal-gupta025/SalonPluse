@@ -2,6 +2,9 @@ from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
 
+from datetime import date
+from typing import Optional
+
 from typing import List
 
 from sqlalchemy.orm import Session
@@ -85,4 +88,30 @@ def get_visit_details(
             current_user.id,
             visit_id
         )
+    )
+
+@router.get(
+    "",
+    response_model=list[VisitResponse]
+)
+def get_visits(
+    visit_date: Optional[date] = None,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+
+    if visit_date:
+
+        return (
+            VisitManager
+            .get_visits_by_date(
+                db,
+                current_user.id,
+                visit_date
+            )
+        )
+
+    return VisitManager.get_visits(
+        db,
+        current_user.id
     )

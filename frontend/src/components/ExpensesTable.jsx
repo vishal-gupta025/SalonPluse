@@ -3,6 +3,27 @@ function ExpenseTable({
   expenses
 }) {
 
+  const formatDate = (value) => {
+    if (!value) {
+      return "-";
+    }
+
+    return new Date(value).toLocaleDateString("en-IN", {
+      dateStyle: "medium"
+    });
+  };
+
+  const formatTime = (value) => {
+
+    if (!value) {
+      return "-";
+    }
+
+    return new Date(value).toLocaleString("en-IN", {
+      timeStyle: "short"
+    });
+  };
+
   return (
     <div className="dashboard-table-shell">
 
@@ -30,6 +51,14 @@ function ExpenseTable({
               Amount
             </th>
 
+            <th className="dashboard-th">
+              Date
+            </th>
+
+            <th className="dashboard-th">
+              Time
+            </th>
+
           </tr>
 
         </thead>
@@ -49,6 +78,14 @@ function ExpenseTable({
 
               <td className="dashboard-td whitespace-nowrap">
                 ₹{expense.amount}
+              </td>
+
+              <td className="dashboard-td whitespace-nowrap text-slate-500">
+                {formatDate(expense.expense_date ?? expense.created_at)}
+              </td>
+
+              <td className="dashboard-td whitespace-nowrap text-slate-500">
+                {formatTime(expense.expense_date ?? expense.created_at)}
               </td>
 
             </tr>

@@ -69,6 +69,18 @@ class CustomerService:
             owner_id,
             query
         )
+
+    @staticmethod
+    def get_customers_by_date(
+        db,
+        owner_id,
+        visit_date
+    ):
+        return CustomerRepository.get_customers_by_date(
+            db,
+            owner_id,
+            visit_date
+        )
     
     @staticmethod
     def customer_history(

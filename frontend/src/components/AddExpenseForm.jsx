@@ -16,6 +16,10 @@ function AddExpenseForm({
 
     e.preventDefault();
 
+    if (!title.trim() || !amount.trim() || Number(amount) <= 0) {
+      return;
+    }
+
     await onAdd({
       title,
       amount: Number(amount)
@@ -41,6 +45,7 @@ function AddExpenseForm({
           type="text"
           placeholder="Expense Title"
           className="dashboard-input"
+          required
           value={title}
           onChange={(e) =>
             setTitle(e.target.value)
@@ -51,6 +56,9 @@ function AddExpenseForm({
           type="number"
           placeholder="Amount"
           className="dashboard-input"
+          min="0.01"
+          step="0.01"
+          required
           value={amount}
           onChange={(e) =>
             setAmount(e.target.value)

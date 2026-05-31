@@ -68,8 +68,9 @@ class AnalyticsService:
 
         return [
             {
-                "service_name": row[0],
-                "count": row[1]
+                # query returns (Service.id, Service.name, count)
+                "service_name": row[1],
+                "count": int(row[2] or 0)
             }
             for row in data
         ]
@@ -77,21 +78,28 @@ class AnalyticsService:
     @staticmethod
     def revenue_trend(
         db,
-        owner_id
+        owner_id,
+        month,
+        year,
+        owner_created_at=None
     ):
 
         rows = (
             AnalyticsRepository
             .revenue_trend(
                 db,
-                owner_id
+                owner_id,
+                month,
+                year,
+                owner_created_at
             )
         )
 
         return [
             {
-                "date": str(row[0]),
-                "revenue": row[1]
+                "month": row.month.strftime("%Y-%m"),
+                "day": int(row.day),
+                "revenue": float(row.revenue or 0)
             }
             for row in rows
         ]

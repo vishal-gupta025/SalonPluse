@@ -25,7 +25,7 @@ function AddVisitForm({
     setNewCustomerPhone] = useState("");
 
   const [newCustomerGender,
-    setNewCustomerGender] = useState("");
+    setNewCustomerGender] = useState("Male");
 
   const [selectedServices,
     setSelectedServices] = useState([]);
@@ -116,7 +116,7 @@ function AddVisitForm({
       } else {
 
         payload.new_customer = {
-          name: newCustomerName,
+          name: newCustomerName || search,
           phone: newCustomerPhone,
           gender: newCustomerGender
         };
@@ -237,7 +237,7 @@ function AddVisitForm({
             type="text"
             placeholder="Customer Name"
             className="dashboard-input mb-2"
-            value={newCustomerName}
+            value={newCustomerName || search}
             onChange={(e) =>
               setNewCustomerName(
                 e.target.value
@@ -258,16 +258,46 @@ function AddVisitForm({
           />
 
           <input
-            type="text"
-            placeholder="Gender"
-            className="dashboard-input"
+            type="hidden"
             value={newCustomerGender}
-            onChange={(e) =>
-              setNewCustomerGender(
-                e.target.value
-              )
-            }
+            readOnly
           />
+
+          <div className="mt-3">
+
+            <label className="block mb-2 font-medium">
+              Gender
+            </label>
+
+            <div className="grid grid-cols-2 gap-3">
+
+              <button
+                type="button"
+                onClick={() => setNewCustomerGender("Male")}
+                className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition ${
+                  newCustomerGender === "Male"
+                    ? "border-teal-600 bg-teal-600 text-white shadow-sm shadow-teal-600/20"
+                    : "border-teal-100 bg-teal-50 text-slate-700 hover:bg-teal-100"
+                }`}
+              >
+                Male
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setNewCustomerGender("Female")}
+                className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition ${
+                  newCustomerGender === "Female"
+                    ? "border-teal-600 bg-teal-600 text-white shadow-sm shadow-teal-600/20"
+                    : "border-teal-100 bg-teal-50 text-slate-700 hover:bg-teal-100"
+                }`}
+              >
+                Female
+              </button>
+
+            </div>
+
+          </div>
 
         </div>
       )}
@@ -323,29 +353,33 @@ function AddVisitForm({
           Payment Method
         </label>
 
-        <select
-          className="dashboard-select"
-          value={paymentMethod}
-          onChange={(e) =>
-            setPaymentMethod(
-              e.target.value
-            )
-          }
-        >
+        <div className="grid grid-cols-2 gap-3">
 
-          <option value="CASH">
-            CASH
-          </option>
+          <button
+            type="button"
+            onClick={() => setPaymentMethod("CASH")}
+            className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition ${
+              paymentMethod === "CASH"
+                ? "border-teal-600 bg-teal-600 text-white shadow-sm shadow-teal-600/20"
+                : "border-teal-100 bg-teal-50 text-slate-700 hover:bg-teal-100"
+            }`}
+          >
+            Cash
+          </button>
 
-          <option value="UPI">
+          <button
+            type="button"
+            onClick={() => setPaymentMethod("UPI")}
+            className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition ${
+              paymentMethod === "UPI"
+                ? "border-teal-600 bg-teal-600 text-white shadow-sm shadow-teal-600/20"
+                : "border-teal-100 bg-teal-50 text-slate-700 hover:bg-teal-100"
+            }`}
+          >
             UPI
-          </option>
+          </button>
 
-          <option value="CARD">
-            CARD
-          </option>
-
-        </select>
+        </div>
 
       </div>
 

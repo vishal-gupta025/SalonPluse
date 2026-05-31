@@ -1,9 +1,9 @@
-from datetime import datetime
+from datetime import date
 from datetime import timedelta
 
 from app.core.timezone import indian_time
 
-from sqlalchemy import func
+from sqlalchemy import func, cast, Integer
 
 from app.models.visit import Visit
 from app.models.service import Service
@@ -12,6 +12,20 @@ from app.models.expense import Expense
 from app.models.customer import Customer
 
 class AnalyticsRepository:
+
+    @staticmethod
+    def _month_bounds(
+        year: int,
+        month: int
+    ):
+        start = date(year, month, 1)
+
+        if month == 12:
+            end = date(year + 1, 1, 1)
+        else:
+            end = date(year, month + 1, 1)
+
+        return start, end
 
     # Today's Revenue
     @staticmethod
@@ -134,23 +148,21 @@ class AnalyticsRepository:
     ):
         return (
             db.query(
+                Service.id,
                 Service.name,
                 func.count(
                     VisitService.id
                 ).label("count")
             )
-            .join(
+            .outerjoin(
                 VisitService,
                 VisitService.service_id == Service.id
             )
-            .join(
-                Visit,
-                Visit.id == VisitService.visit_id
-            )
             .filter(
-                Visit.owner_id == owner_id
+                Service.owner_id == owner_id
             )
             .group_by(
+                Service.id,
                 Service.name
             )
             .order_by(
@@ -158,37 +170,80 @@ class AnalyticsRepository:
                     VisitService.id
                 ).desc()
             )
-            .limit(3)
+            .limit(5)
             .all()
         )
     
     @staticmethod
     def revenue_trend(
         db,
-        owner_id
+        owner_id,
+        month,
+        year,
+        owner_created_at=None
     ):
+
+        selected_start, selected_end = AnalyticsRepository._month_bounds(
+            year,
+            month
+        )
+
+        creation_date = (
+            owner_created_at.date()
+            if owner_created_at
+            else selected_start
+        )
+
+        start_date = max(selected_start, creation_date)
 
         return (
             db.query(
-                func.date(
+                func.date_trunc(
+                    "month",
                     Visit.visit_date
-                ).label("date"),
+                ).label("month"),
+
+                cast(
+                    func.extract(
+                        "day",
+                        Visit.visit_date
+                    ),
+                    Integer
+                ).label("day"),
 
                 func.sum(
                     Visit.total_amount
                 ).label("revenue")
             )
             .filter(
-                Visit.owner_id == owner_id
+                Visit.owner_id == owner_id,
+                Visit.visit_date >= start_date,
+                Visit.visit_date < selected_end
             )
             .group_by(
-                func.date(
+                func.date_trunc(
+                    "month",
                     Visit.visit_date
+                ),
+                cast(
+                    func.extract(
+                        "day",
+                        Visit.visit_date
+                    ),
+                    Integer
                 )
             )
             .order_by(
-                func.date(
+                func.date_trunc(
+                    "month",
                     Visit.visit_date
+                ),
+                cast(
+                    func.extract(
+                        "day",
+                        Visit.visit_date
+                    ),
+                    Integer
                 )
             )
             .all()

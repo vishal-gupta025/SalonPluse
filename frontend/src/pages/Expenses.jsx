@@ -88,7 +88,7 @@ function Expenses() {
       />
 
       {loading ? (
-        <TableSkeleton rows={5} columns={2} />
+        <TableSkeleton rows={5} columns={4} />
       ) : error ? (
         <InlineErrorState
           title="Expenses unavailable"

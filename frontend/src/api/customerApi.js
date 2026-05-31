@@ -42,3 +42,15 @@ export const searchCustomers = async (
 
   return response.data;
 };
+
+export const getCustomersByDate = async (visitDate) => {
+  let url = "/customers/by-date";
+
+  if (visitDate) {
+    url += `?visit_date=${visitDate}`;
+  }
+
+  const response = await api.get(url);
+
+  return response.data;
+};

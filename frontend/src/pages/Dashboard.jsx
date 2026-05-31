@@ -17,6 +17,41 @@ import {
   getTopServices,
   getPaymentBreakdown
 } from "../api/dashboardApi";
+import { getProfile } from "../api/authApi";
+import { getServices } from "../api/serviceApi";
+
+const MONTHS = [
+  { value: 1, label: "January" },
+  { value: 2, label: "February" },
+  { value: 3, label: "March" },
+  { value: 4, label: "April" },
+  { value: 5, label: "May" },
+  { value: 6, label: "June" },
+  { value: 7, label: "July" },
+  { value: 8, label: "August" },
+  { value: 9, label: "September" },
+  { value: 10, label: "October" },
+  { value: 11, label: "November" },
+  { value: 12, label: "December" }
+];
+
+const getMonthsForYear = (year, creationDate, currentYear, currentMonth) => {
+  return MONTHS.filter((item) => {
+    if (!creationDate) {
+      return true;
+    }
+
+    if (year === creationDate.getFullYear() && item.value < creationDate.getMonth() + 1) {
+      return false;
+    }
+
+    if (year === currentYear && item.value > currentMonth) {
+      return false;
+    }
+
+    return true;
+  });
+};
 
 function Dashboard() {
 
@@ -33,6 +68,10 @@ function Dashboard() {
   const [paymentBreakdown,
     setPaymentBreakdown] = useState({});
 
+  const [profile, setProfile] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+
   useEffect(() => {
 
     fetchDashboard();
@@ -45,28 +84,66 @@ function Dashboard() {
     setError("");
 
     try {
+      // Profile is required (for creation date and ownership).
+      const profileData = await getProfile();
 
-      const statsData =
-        await getDashboardStats();
+      const createdAt = profileData.created_at
+        ? new Date(profileData.created_at)
+        : new Date();
 
-      const revenueData =
-        await getRevenueTrend();
+      const initialMonth = new Date().getMonth() + 1;
+      const initialYear = new Date().getFullYear();
 
-      const topServicesData =
-        await getTopServices();
+      setProfile(profileData);
+      setSelectedMonth(initialMonth);
+      setSelectedYear(initialYear);
 
-      const paymentData =
-        await getPaymentBreakdown();
+      // Fetch other dashboard pieces in parallel and tolerate partial failures.
+      const [statsRes, topRes, paymentRes, revenueRes, servicesRes] = await Promise.allSettled([
+        getDashboardStats(),
+        getTopServices(),
+        getPaymentBreakdown(),
+        getRevenueTrend(initialMonth, initialYear),
+        getServices()
+      ]);
 
-      setStats(statsData);
+      if (statsRes.status === "fulfilled") {
+        setStats(statsRes.value);
+      } else {
+        console.log("getDashboardStats failed:", statsRes.reason);
+      }
 
-      setRevenueTrend(revenueData);
+      const topServicesData = topRes.status === "fulfilled" ? topRes.value : [];
+      const servicesData = servicesRes.status === "fulfilled" ? servicesRes.value : [];
 
-      setTopServices(topServicesData);
+      const mergedTopServices = servicesData.length
+        ? servicesData.map((service) => {
+            const match = topServicesData.find((t) => t.service_name === service.name);
+            return {
+              service_name: service.name,
+              count: Number(match?.count ?? 0)
+            };
+          })
+        : topServicesData;
 
-      setPaymentBreakdown(paymentData);
+      setTopServices(mergedTopServices);
+
+      if (paymentRes.status === "fulfilled") {
+        setPaymentBreakdown(paymentRes.value);
+      } else {
+        console.log("getPaymentBreakdown failed:", paymentRes.reason);
+        setPaymentBreakdown({});
+      }
+
+      if (revenueRes.status === "fulfilled") {
+        setRevenueTrend(revenueRes.value);
+      } else {
+        console.log("getRevenueTrend failed:", revenueRes.reason);
+        setRevenueTrend([]);
+      }
 
     } catch (error) {
+      // If profile or other unexpected error occurs, show blocking error.
       setError("Failed to load dashboard data. Please try again.");
       console.log(error);
 
@@ -74,6 +151,49 @@ function Dashboard() {
       setLoading(false);
     }
   };
+
+  const handleMonthChange = async (event) => {
+    const nextMonth = Number(event.target.value);
+
+    setSelectedMonth(nextMonth);
+
+    try {
+      const data = await getRevenueTrend(nextMonth, selectedYear);
+      setRevenueTrend(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleYearChange = async (event) => {
+    const nextYear = Number(event.target.value);
+    const nextMonths = getMonthsForYear(nextYear, creationDate, currentYear, currentMonth);
+    const nextMonth = nextMonths.find((item) => item.value === selectedMonth)?.value || nextMonths[0]?.value || selectedMonth;
+
+    setSelectedYear(nextYear);
+    setSelectedMonth(nextMonth);
+
+    try {
+      const data = await getRevenueTrend(nextMonth, nextYear);
+      setRevenueTrend(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1;
+
+  const creationDate = profile?.created_at ? new Date(profile.created_at) : null;
+
+  const availableYears = creationDate
+    ? Array.from(
+        { length: currentYear - creationDate.getFullYear() + 1 },
+        (_, index) => creationDate.getFullYear() + index
+      )
+    : [currentYear];
+
+  const availableMonths = getMonthsForYear(selectedYear, creationDate, currentYear, currentMonth);
 
   return (
     <DashboardLayout>
@@ -89,7 +209,7 @@ function Dashboard() {
       ) : (
         <>
 
-          <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div className="mb-8 overflow-hidden rounded-3xl border border-teal-100 bg-gradient-to-r from-teal-50 via-white to-slate-50 p-6 shadow-sm shadow-teal-100/40 sm:p-8">
 
             <div>
               <h1 className="dashboard-page-title">
@@ -129,22 +249,31 @@ function Dashboard() {
             </div>
           )}
 
-          <div className="mt-8 grid gap-6 xl:grid-cols-2">
+          <div className="mt-8">
 
             <RevenueChart
               data={revenueTrend}
+              month={selectedMonth}
+              year={selectedYear}
+              months={availableMonths}
+              years={availableYears}
+              onMonthChange={handleMonthChange}
+              onYearChange={handleYearChange}
             />
+
+          </div>
+
+          <div className="mt-8 grid gap-6 xl:grid-cols-2">
 
             <PaymentChart
               data={paymentBreakdown}
             />
 
-          </div>
+            <TopServicesChart
+              data={topServices}
+            />
 
-          <TopServicesChart
-            data={topServices}
-            className="mt-8"
-          />
+          </div>
 
         </>
 

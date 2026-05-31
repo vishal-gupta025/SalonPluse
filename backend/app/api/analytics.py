@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from fastapi import Depends
+from fastapi import Query
 from datetime import date
 
 from sqlalchemy.orm import Session
@@ -61,13 +62,18 @@ def top_services(
     response_model=list[RevenueTrendResponse]
 )
 def revenue_trend(
+    month: int = Query(..., ge=1, le=12),
+    year: int = Query(..., ge=2000, le=2100),
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user)
 ):
 
     return AnalyticsService.revenue_trend(
         db,
-        current_user.id
+        current_user.id,
+        month,
+        year,
+        current_user.created_at
     )
 
 @router.get(

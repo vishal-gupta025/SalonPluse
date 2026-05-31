@@ -61,5 +61,6 @@ def get_me(
         "id": current_user.id,
         "name": current_user.name,
         "phone": current_user.phone,
-        "email": current_user.email
+        "email": current_user.email,
+        "created_at": current_user.created_at.isoformat() if current_user.created_at else None
     }

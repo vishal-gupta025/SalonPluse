@@ -18,6 +18,8 @@ from app.services.customer_service import (
 )
 
 from fastapi import Query
+from datetime import date
+from typing import Optional
 
 router = APIRouter(
     prefix="/customers",
@@ -88,11 +90,28 @@ def customer_visit_history(
     current_user=Depends(get_current_user)
 ):
 
-    return (
-        CustomerService
-        .customer_history(
-            db,
-            current_user.id,
-            customer_id
-        )
+    return CustomerService.customer_history(
+        db,
+        current_user.id,
+        customer_id
     )
+
+@router.get(
+    "/by-date",
+    response_model=list[CustomerResponse]
+)
+def get_customers_by_date(
+    visit_date: Optional[date] = None,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+
+    if not visit_date:
+        visit_date = date.today()
+
+    return CustomerService.get_customers_by_date(
+        db,
+        current_user.id,
+        visit_date
+    )
+    

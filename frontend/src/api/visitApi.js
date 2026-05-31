@@ -1,9 +1,18 @@
 import api from "./axios";
 
-export const getVisits = async () => {
+export const getVisits = async (
+  visitDate = null
+) => {
+
+  let url = "/visits";
+
+  if (visitDate) {
+
+    url += `?visit_date=${visitDate}`;
+  }
 
   const response = await api.get(
-    "/visits"
+    url
   );
 
   return response.data;

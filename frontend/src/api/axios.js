@@ -14,4 +14,21 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// If backend returns 401, clear token and redirect to login
+api.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    const status = err.response?.status;
+    if (status === 401) {
+      try {
+        localStorage.removeItem("token");
+      } catch (_) {}
+      // force reload to login page
+      window.location.href = "/";
+    }
+
+    return Promise.reject(err);
+  }
+);
+
 export default api;

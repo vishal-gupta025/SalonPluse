@@ -8,6 +8,8 @@ from app.models.visit_service import VisitService
 
 from app.models.service import Service
 
+from sqlalchemy import func
+
 
 class VisitRepository:
 
@@ -79,6 +81,78 @@ class VisitRepository:
 
                 "services":
                 service_names,
+
+                "total_amount":
+                visit.total_amount,
+
+                "payment_method":
+                visit.payment_method,
+
+                "visit_date":
+                visit.visit_date.strftime(
+                    "%Y-%m-%d"
+                )
+            })
+
+        return result
+
+    @staticmethod
+    def get_by_date(
+        db,
+        owner_id,
+        visit_date
+    ):
+
+        visits = (
+            db.query(
+                Visit.id,
+                Customer.name.label(
+                    "customer_name"
+                ),
+                Visit.total_amount,
+                Visit.payment_method,
+                Visit.visit_date
+            )
+            .join(
+                Customer,
+                Visit.customer_id == Customer.id
+            )
+            .filter(
+                Visit.owner_id == owner_id,
+                func.date(
+                    Visit.visit_date
+                ) == visit_date
+            )
+            .all()
+        )
+
+        result = []
+
+        for visit in visits:
+
+            services = (
+                db.query(Service.name)
+                .join(
+                    VisitService,
+                    VisitService.service_id
+                    == Service.id
+                )
+                .filter(
+                    VisitService.visit_id
+                    == visit.id
+                )
+                .all()
+            )
+
+            result.append({
+
+                "id": visit.id,
+
+                "customer_name":
+                visit.customer_name,
+
+                "services":
+                [s.name for s in services],
 
                 "total_amount":
                 visit.total_amount,

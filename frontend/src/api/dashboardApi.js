@@ -8,9 +8,15 @@ export const getDashboardStats = async () => {
   return response.data;
 };
 
-export const getRevenueTrend = async () => {
+export const getRevenueTrend = async (month, year) => {
   const response = await api.get(
-    "/analytics/revenue-trend"
+    "/analytics/revenue-trend",
+    {
+      params: {
+        month,
+        year
+      }
+    }
   );
 
   return response.data;

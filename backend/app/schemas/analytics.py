@@ -13,7 +13,8 @@ class TopServiceResponse(BaseModel):
     count: int
 
 class RevenueTrendResponse(BaseModel):
-    date: str
+    month: str
+    day: int
     revenue: float
 
 class CustomerGrowthResponse(BaseModel):

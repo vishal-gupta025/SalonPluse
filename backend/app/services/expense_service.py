@@ -1,4 +1,5 @@
 from app.models.expense import Expense
+from app.core.timezone import indian_time
 
 from app.repositories.expense_repo import (
     ExpenseRepository
@@ -14,10 +15,14 @@ class ExpenseService:
         owner_id
     ):
 
+        now = indian_time()
+
         expense = Expense(
             owner_id=owner_id,
             title=payload.title,
-            amount=payload.amount
+            amount=payload.amount,
+            expense_date=now,
+            created_at=now
         )
 
         return ExpenseRepository.create(

@@ -178,3 +178,18 @@ class VisitManager:
             "payment_method": visit.payment_method,
             "services": service_details
         }
+    
+    @staticmethod
+    def get_visits_by_date(
+        db,
+        owner_id,
+        visit_date
+    ):
+        return (
+            VisitRepository
+            .get_by_date(
+                db,
+                owner_id,
+                visit_date
+            )
+        )
